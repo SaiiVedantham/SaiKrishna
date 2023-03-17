@@ -1,48 +1,32 @@
-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
-{
-    "fruit": "Apple",
-    "size": "Large",
-    "color": "Red"
-}
- 
-
-Example 2:
-
-{
-    "quiz": {
-        "sport": {
-            "q1": {
-                "question": "Which one is correct team name in NBA?",
-                "options": [
-                    "New York Bulls",
-                    "Los Angeles Kings",
-                    "Golden State Warriros",
-                    "Huston Rocket"
-                ],
-                "answer": "Huston Rocket"
-            }
-        },
-        "maths": {
-            "q1": {
-                "question": "5 + 7 = ?",
-                "options": [
-                    "10",
-                    "11",
-                    "12",
-                    "13"
-                ],
-                "answer": "12"
-            },
-            "q2": {
-                "question": "12 - 8 = ?",
-                "options": [
-                    "1",
-                    "2",
-                    "3",
-                    "4"
-                ],
-                "answer": "4"
-            }
+resource "aws_appflow_connector_profile" "test" {
+  name            = "salesforce_marketing_cloud"
+  connector_type  = "CustomConnector"
+  connection_mode = "Public"
+  connector_label = "SalesforceMarketingCloud"
+  connector_profile_config {
+    connector_profile_credentials {
+      custom_connector {
+        authentication_type = "OAUTH2"
+        oauth2 {
+          client_id     = "testID"
+          client_secret = "testSecret"
+          oauth_request {
+            redirect_uri = "https://test1234.rest.marketingcloudapis.com/"
+          }
         }
+      }
     }
+    connector_profile_properties {
+      custom_connector {
+        oauth2_properties {
+          oauth2_grant_type = "CLIENT_CREDENTIALS"
+          token_url         = "https://test1234.auth.marketingcloudapis.com/v2/token"
+        }
+        profile_properties = {
+          "instanceUrl" = "https://test1234.rest.marketingcloudapis.com/"
+        }
+      }
+    }
+  }
 }
+
